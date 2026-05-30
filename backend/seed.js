@@ -5,33 +5,27 @@ const User = require('./src/models/User');
 const Project = require('./src/models/Project');
 
 async function seed() {
-  console.log('Connecting to MongoDB...');
-  
   const connString = process.env.MONGODB_URI;
+
   if (!connString || connString.includes('<db_password>')) {
-    console.error('\n❌ ERROR: Invalid or missing MONGODB_URI in your backend/.env file!');
-    console.error('Please make sure you have added your real MongoDB connection string.\n');
+    console.error('ERROR: Invalid or missing MONGODB_URI in backend/.env');
     process.exit(1);
   }
 
   await mongoose.connect(connString);
-  console.log('✅ Connected to MongoDB. Clearing database for seeding...');
+  console.log('Connected to MongoDB.');
 
-  // Clear existing collections
   await User.deleteMany({});
   await Project.deleteMany({});
+  console.log('Existing data cleared.');
 
-  console.log('🌱 Seeding database with initial users and projects...');
-
-  // Hash passwords
-  const adminPassword = await bcrypt.hash('admin123', 12);
+  const adminPassword    = await bcrypt.hash('admin123',    12);
   const engineerPassword = await bcrypt.hash('engineer123', 12);
-  const viewerPassword = await bcrypt.hash('viewer123', 12);
+  const viewerPassword   = await bcrypt.hash('viewer123',   12);
 
   const trialExpiry = new Date();
   trialExpiry.setDate(trialExpiry.getDate() + 14);
 
-  // 1. Create Users
   const admin = await User.create({
     name: 'Admin User',
     email: 'admin@engitrack.com',
@@ -59,7 +53,6 @@ async function seed() {
     subscription_expires_at: trialExpiry,
   });
 
-  // 2. Create Projects
   await Project.create([
     {
       name: 'Highway Bridge Design',
@@ -78,21 +71,21 @@ async function seed() {
       type: 'commercial',
       description: 'Multi-use commercial plaza with retail and office spaces.',
       creator_id: admin._id,
-    }
+    },
   ]);
 
-  console.log('\n🎉 Seeding complete successfully!\n');
-  console.log('=== Test Accounts ===');
-  console.log('👑 Admin:    admin@engitrack.com / admin123');
-  console.log('🏗️ Engineer: engineer@engitrack.com / engineer123');
-  console.log('👁️ Viewer:   viewer@engitrack.com / viewer123');
-  console.log('=====================\n');
+  console.log('\nSeeding complete.\n');
+  console.log('--- Test Accounts ---');
+  console.log('Admin:    admin@engitrack.com    /  admin123');
+  console.log('Engineer: engineer@engitrack.com /  engineer123');
+  console.log('Viewer:   viewer@engitrack.com   /  viewer123');
+  console.log('\n');
 
   mongoose.connection.close();
 }
 
 seed().catch((err) => {
-  console.error('\n❌ Seeding error:', err);
+  console.error('Seeding failed:', err);
   mongoose.connection.close();
   process.exit(1);
 });
