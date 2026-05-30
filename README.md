@@ -71,13 +71,27 @@ The platform enforces subscription plans (Free Trial, Professional, Enterprise).
 - **Backend Route Protection**: Express middleware validates the JWT from incoming cookies on every protected route. Role checks are also enforced here to ensure APIs cannot be bypassed.
 - **Frontend Route Protection**: Next.js `middleware.ts` intercepts page requests on the server-side, verifying the authentication cookie before allowing users into protected dashboard routes.
 
-## Folder Structure
+## File Structure
 ```text
-krezona/
+EngiTrack/
 ├── backend/          # Node.js Express API and MongoDB models
+│   ├── src/          # API routes, controllers, and DB models
+│   ├── seed.js       # Database seeder
+│   └── package.json
 ├── frontend/         # Next.js web application
+│   ├── app/          # App router and layouts
+│   │   ├── (auth)/   # Login and Register pages
+│   │   └── dashboard/# Main application routes (admin, projects, etc.)
+│   ├── components/   # Reusable UI components
+│   ├── hooks/        # Custom React hooks (e.g., useAuth, useProjects)
+│   ├── lib/          # Utilities and Context Providers
+│   │   └── query-provider.tsx # React Query Provider
+│   ├── middleware.ts # Route protection logic
+│   └── package.json
 ├── electron/         # Electron desktop wrapper
-└── docs/             # Documentation and assets
+│   ├── main.js       # Electron entry point
+│   └── package.json
+└── README.md         # Project documentation
 ```
 
 ---
