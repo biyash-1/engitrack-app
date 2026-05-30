@@ -1,0 +1,12 @@
+{
+  "name": "krezona-desktop",
+  "version": "1.0.0",
+  "description": "Secure Subscription-Based Engineering Desktop Application Wrapper",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "dependencies": {
+    "electron": "^30.0.1"
+  }
+}
