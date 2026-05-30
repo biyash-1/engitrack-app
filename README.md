@@ -81,10 +81,14 @@ EngiTrack/
 ├── frontend/         # Next.js web application
 │   ├── app/          # App router and layouts
 │   │   ├── (auth)/   # Login and Register pages
-│   │   └── dashboard/# Main application routes (admin, projects, etc.)
+│   │   └── dashboard/ # Main application routes (admin, projects, etc.)
 │   ├── components/   # Reusable UI components
+│   ├── constants/    # Shared constants (e.g., query keys)
+│   │   └── queryKeys.ts
+│   ├── utils/        # Utility helpers (e.g., date formatting)
+│   │   └── date.ts
 │   ├── hooks/        # Custom React hooks (e.g., useAuth, useProjects)
-│   ├── lib/          # Utilities and Context Providers
+│   ├── lib/          # Context Providers and API helpers
 │   │   └── query-provider.tsx # React Query Provider
 │   ├── middleware.ts # Route protection logic
 │   └── package.json
