@@ -35,6 +35,8 @@ const authenticate = async (req, res, next) => {
     if (error.name === 'TokenExpiredError') {
       return res.status(401).json({ message: 'Token expired.', code: 'TOKEN_EXPIRED' });
     }
+    res.clearCookie('accessToken', { path: '/' });
+    res.clearCookie('refreshToken', { path: '/' });
     return res.status(401).json({ message: 'Invalid token.' });
   }
 };

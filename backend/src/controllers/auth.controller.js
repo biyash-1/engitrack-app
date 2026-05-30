@@ -145,6 +145,8 @@ const refreshToken = async (req, res) => {
 
     res.json({ accessToken, refreshToken: newRefreshToken });
   } catch (error) {
+    res.clearCookie("accessToken", { path: "/" });
+    res.clearCookie("refreshToken", { path: "/" });
     return res.status(401).json({ message: "Invalid refresh token." });
   }
 };
