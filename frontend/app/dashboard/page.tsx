@@ -3,6 +3,7 @@
 import { useAuth } from '@/lib/auth';
 import { useProjects } from '@/hooks/useProjects';
 import { useAdminStats } from '@/hooks/useAdmin';
+import { formatDate } from '@/constants/date';
 import {
   FolderKanban,
   Users,
@@ -149,7 +150,7 @@ export default function DashboardPage() {
               <div key={project.id} className="px-5 py-3 flex items-center justify-between">
                 <div>
                   <p className="text-sm font-medium text-gray-900">{project.name}</p>
-                  <p className="text-xs text-gray-500 capitalize">{project.type} • {new Date(project.created_at).toLocaleDateString()}</p>
+                  <p className="text-xs text-gray-500 capitalize">{project.type} • {formatDate(project.created_at)}</p>
                 </div>
                 <span className="px-2 py-0.5 text-xs font-medium rounded-full bg-blue-50 text-blue-600 capitalize">
                   {project.type}

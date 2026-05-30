@@ -3,6 +3,7 @@
 import { useAdminStats, useLoginLogs } from "@/hooks/useAdmin";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import { Users, FolderKanban, Activity, Shield } from "lucide-react";
+import { formatDateTime } from "../../../utils/date";
 
 export default function AdminPage() {
   const { data: adminData, isLoading: statsLoading } = useAdminStats();
@@ -152,7 +153,7 @@ export default function AdminPage() {
                         {log.ip_address || "N/A"}
                       </td>
                       <td className="px-5 py-3 text-gray-500">
-                        {new Date(log.logged_in_at).toLocaleString()}
+                        {formatDateTime(log.logged_in_at)}
                       </td>
                       <td className="px-5 py-3 text-gray-500">
                         {log.user_agent?.includes("Firefox")

@@ -1,11 +1,12 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import api from '@/lib/api';
 import type { User, LoginLog, AdminStats } from '@/types';
+import { QUERY_KEYS } from '@/constants/queryKeys';
 
 
 export function useAdminStats() {
   return useQuery({
-    queryKey: ['admin', 'stats'],
+    queryKey: QUERY_KEYS.ADMIN_STATS,
     queryFn: async () => {
       const { data } = await api.get<AdminStats>('/admin/stats');
       return data;
@@ -16,7 +17,7 @@ export function useAdminStats() {
 
 export function useUsers() {
   return useQuery({
-    queryKey: ['admin', 'users'],
+    queryKey: QUERY_KEYS.ADMIN_USERS,
     queryFn: async () => {
       const { data } = await api.get<{ users: User[] }>('/admin/users');
       return data.users;
@@ -27,7 +28,7 @@ export function useUsers() {
 
 export function useLoginLogs() {
   return useQuery({
-    queryKey: ['admin', 'login-logs'],
+    queryKey: QUERY_KEYS.ADMIN_LOGIN_LOGS,
     queryFn: async () => {
       const { data } = await api.get<{ logs: LoginLog[] }>('/admin/login-logs');
       return data.logs;
@@ -44,7 +45,7 @@ export function useUpdateUserRole() {
       return data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['admin'] });
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.ADMIN_BASE });
     },
   });
 }
@@ -58,7 +59,7 @@ export function useUpdateUserSubscription() {
       return data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['admin'] });
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.ADMIN_BASE });
     },
   });
 }
@@ -73,7 +74,7 @@ export function useUpdateUserStatus() {
       return data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['admin'] });
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.ADMIN_BASE });
     },
   });
 }

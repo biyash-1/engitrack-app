@@ -1,11 +1,12 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import api from '@/lib/api';
 import type { Project } from '@/types';
+import { QUERY_KEYS } from '@/constants/queryKeys';
 
 
 export function useProjects() {
   return useQuery({
-    queryKey: ['projects'],
+    queryKey: QUERY_KEYS.PROJECTS,
     queryFn: async () => {
       const { data } = await api.get<{ projects: Project[] }>('/projects');
       return data.projects;
@@ -16,7 +17,7 @@ export function useProjects() {
 
 export function useProject(id: string) {
   return useQuery({
-    queryKey: ['projects', id],
+    queryKey: [...QUERY_KEYS.PROJECTS, id],
     queryFn: async () => {
       const { data } = await api.get<{ project: Project }>(`/projects/${id}`);
       return data.project;
@@ -35,7 +36,7 @@ export function useCreateProject() {
       return data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['projects'] });
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.PROJECTS });
     },
   });
 }
@@ -49,7 +50,7 @@ export function useUpdateProject() {
       return data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['projects'] });
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.PROJECTS });
     },
   });
 }
@@ -64,7 +65,7 @@ export function useDeleteProject() {
       return data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['projects'] });
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.PROJECTS });
     },
   });
 }
