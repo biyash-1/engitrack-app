@@ -51,4 +51,4 @@ const checkSubscription = (...allowedPlans) => {
   };
 };
 
-module.exports = { authorize, checkSubscription, roleHierarchy };
+module.exports = { authorize, checkSubscription };
